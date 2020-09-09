@@ -8,5 +8,8 @@
         "enable": true,
         "baseUri": "/api",
         "proxyUri": "http://127.0.0.1:7071/api"
-     }
+    },
+    "staticWebApps.appSubpath": "weather-app",
+    "staticWebApps.apiSubpath": "api",
+    "staticWebApps.appArtifactSubpath": "dist"
 }

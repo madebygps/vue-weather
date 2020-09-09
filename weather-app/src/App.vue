@@ -1,9 +1,9 @@
 <template>
-  <div id="app" :class="typeof weather.condition != 'undefined'&& weather.temp > 70 ? 'warm': ''">
+  <div id="app" :class="weather.temp > 70 ? 'warm': ''">
    <main> 
      <div class="search-box">
        <input type="text" class="search-bar" 
-       placeholder="Search..." v-model="query" @keypress="fetchWeather"/>
+       placeholder="Search for city" v-model="query" @keypress="fetchWeather"/>
 
        
      </div>
@@ -74,8 +74,9 @@ export default {
 }
 
 body {
-  font-family: 'montserrat', sans-serif;
+    font-family: 'Roboto';font-size: 22px;
 }
+
 
 #app{
   background-image: linear-gradient(to bottom, rgba(12, 132, 245, 0.25), rgba(0, 26, 255, 0.75));
@@ -110,17 +111,13 @@ main {
   outline: none;
   background:none;
 
- 
   background-color: rgba(255,255,255,0.5);
   border-radius: 10px 10px 10px 10px;
-
 }
 
 .search-box .search-bar:focus{
-  box-shadow:0px 0px 16px rgba(0,0,0,0.25) ;
   background-color: rgba(255,255,255,0.75);
   border-radius: 10px 10px 10px 10px;
-
 }
 
 .location-box .location{
@@ -128,17 +125,14 @@ main {
   font-size: 32px;
   font-weight: 500;
   text-align: center;
-  text-shadow: 1px 3px rgba(0,0,0,0.25);
-
+  
 }
 
 .location-box .date{
-
   color: #ffffff;
   font-size: 20px;
   font-weight: 300;
   text-align: center;
-  font-style: italic;
 
 }
 
@@ -158,8 +152,6 @@ main {
   color: #ffffff;
   font-size: 48px;
   font-weight: 700;
-  font-style: italic;
-  text-shadow: 3px 6px rgba(0,0,0,0.25);
 
 }
 

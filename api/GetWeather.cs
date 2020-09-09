@@ -21,13 +21,16 @@ namespace Company.Function
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
             ILogger log)
         {
-            log.LogInformation("C# HTTP trigger function processed a request.");
+
+            
+            
 
             string url_base = System.Environment.GetEnvironmentVariable("url_base");
             string api_key = System.Environment.GetEnvironmentVariable("api_key");
 
-            string city = req.Query["query"];;
-
+            
+            string city = req.Query["query"];
+            log.LogInformation(city);
             string query = string.Format("{0}{1}",city,"&units=imperial&APPID=");
 
 
@@ -35,17 +38,15 @@ namespace Company.Function
             var response = await client.GetAsync(string.Format("{0}{1}{2}", url_base, query, api_key));
             string content = await response.Content.ReadAsStringAsync();
 
-            Root weather = JsonConvert.DeserializeObject<Root>(content);
+            OpenWeather openWeather = JsonConvert.DeserializeObject<OpenWeather>(content);
             ParsedWeather parsedWeather = new ParsedWeather();
 
-            parsedWeather.condition = weather.weather[0].main;
-            parsedWeather.temp = weather.main.temp;
-            parsedWeather.country = weather.sys.country;
-            parsedWeather.cityName = weather.name;
+            parsedWeather.condition = openWeather.weather[0].main;
+            parsedWeather.temp = openWeather.main.temp;
+            parsedWeather.country = openWeather.sys.country;
+            parsedWeather.cityName = openWeather.name;
 
             string output = JsonConvert.SerializeObject(parsedWeather);
-
-            // http://api.openweathermap.org/data/2.5/weather?q=danbury&units=imperial&APPID=1ca7c164507d176307c573fa19b06ff9
 
     
 
@@ -63,7 +64,6 @@ public class ParsedWeather {
     public string condition{ get; set; }
     public double temp { get; set; }
     public string country { get; set; }
-
     public string cityName { get; set; }
 
 }
@@ -84,7 +84,7 @@ public class ParsedWeather {
         public string country { get; set; }
     }
 
-    public class Root
+    public class OpenWeather
     {
 
         public List<Weather> weather { get; set; }
